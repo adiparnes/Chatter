@@ -1,14 +1,14 @@
 //
-//  MapViewController.swift
+//  BlockedUsersViewController.swift
 //  Chatter
 //
-//  Created by Avihai Shabtai on 29/02/2020.
+//  Created by Avihai Shabtai on 06/03/2020.
 //  Copyright © 2020 Niv-Ackerman. All rights reserved.
 //
 
 import UIKit
 
-class MapViewController: UIViewController {
+class BlockedUsersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

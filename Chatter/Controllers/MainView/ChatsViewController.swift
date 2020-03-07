@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 
 
+@available(iOS 13.0, *)
 class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource , RecentChatTableViewCellDelegate, UISearchResultsUpdating{
     
     
@@ -140,7 +141,7 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         
         let muteAction = UITableViewRowAction(style: .default, title: muteTitle) { (action, indexPath) in
-            print("mute\(indexPath)")
+            self.updatePushMembers(recent: tempRecent, mute: mute)
         }
        
         muteAction.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
@@ -169,7 +170,7 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         chatVC.membersToPush = (recent[kMEMBERSTOPUSH] as? [String])!
         chatVC.chatRoonmId = (recent[kCHATROOMID] as? String)!
         chatVC.titleName = (recent[kWITHUSERFULLNAME] as? String)!
-        
+        chatVC.isGroup = (recent[kTYPE] as! String) == kGROUP
         
         navigationController?.pushViewController(chatVC, animated: true)
         
@@ -298,6 +299,33 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func updateSearchResults(for searchController: UISearchController) {
         
         filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
+    
+    
+    //MARK: Helper functions
+    
+//    func selectUserForChat(isGroup: Bool) {
+//
+//        let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsTableViewController
+//
+//        contactsVC.isGroup = isGroup
+//
+//        self.navigationController?.pushViewController(contactsVC, animated: true)
+//    }
+    
+    func updatePushMembers(recent: NSDictionary, mute: Bool) {
+        
+        var membersToPush = recent[kMEMBERSTOPUSH] as! [String]
+        
+        if mute {
+            let index = membersToPush.index(of: FUser.currentId())!
+            membersToPush.remove(at: index)
+        } else {
+            membersToPush.append(FUser.currentId())
+        }
+        
+        updateExistingRicentWithNewValues(chatRoomId: recent[kCHATROOMID] as! String, members: recent[kMEMBERS] as! [String], withValues: [kMEMBERSTOPUSH : membersToPush])
+        
     }
     
     

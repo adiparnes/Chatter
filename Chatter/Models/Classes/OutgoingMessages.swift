@@ -19,6 +19,8 @@ class OutgoingMessages {
             
             messageDictionary = NSMutableDictionary(objects: [message, senderId, senderName, dateFormatter().string(from: date), status, type], forKeys: [kMESSAGE as NSCopying, kSENDERID as NSCopying, kSENDERNAME as NSCopying, kDATE as NSCopying, kSTATUS as NSCopying, kTYPE as NSCopying])
         }
+    
+    
 
         //picture message
         init(message: String, pictureLink: String, senderId: String, senderName: String, date: Date, status: String, type: String) {
@@ -58,8 +60,8 @@ class OutgoingMessages {
                 reference(.Message).document(memberId).collection(chatRoomID).document(messageId).setData(messageDictionary as! [String : Any])
             }
             
-//            updateRecents(chatRoomId: chatRoomID, lastMessage: messageDictionary[kMESSAGE] as! String)
-//
+            updateRecents(chatRoomId: chatRoomID, lastMessage: messageDictionary[kMESSAGE] as! String)
+
 //            let pushText = "[\(messageDictionary[kTYPE] as! String) message]"
 //
 //            sendPushNotification(memberToPush: membersToPush, message: pushText)
