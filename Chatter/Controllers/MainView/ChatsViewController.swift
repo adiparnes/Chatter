@@ -56,11 +56,12 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //MARK:IBAction
     
     @IBAction func createNewChatButtonPressed(_ sender: Any) {
-        let userVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier:"usersTableView") as! UsersTableViewController
-        self.navigationController?.pushViewController(userVC, animated: true)
+        selectUserForChat(isGroup: false)
     }
     
-    
+    @objc func groupButtonPressed(){
+        selectUserForChat(isGroup: true)
+    }
     
   //MARK: TableViewsDataSource
     
@@ -232,16 +233,8 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         tableView.tableHeaderView = headerView
         
     }
-
-    @objc func groupButtonPressed() {
-        print("hello")
-    }
     
-    
-    //
-    
-    
-    
+  
    //MARK:Recent chatsCell dalegate
     
     func didTapAvatarImage(indexPath: IndexPath) {
@@ -304,14 +297,14 @@ class ChatsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     //MARK: Helper functions
     
-//    func selectUserForChat(isGroup: Bool) {
-//
-//        let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsTableViewController
-//
-//        contactsVC.isGroup = isGroup
-//
-//        self.navigationController?.pushViewController(contactsVC, animated: true)
-//    }
+    func selectUserForChat(isGroup: Bool) {
+
+        let contactsVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "contactsView") as! ContactsTableViewController
+
+        contactsVC.isGroup = isGroup
+
+        self.navigationController?.pushViewController(contactsVC, animated: true)
+    }
     
     func updatePushMembers(recent: NSDictionary, mute: Bool) {
         

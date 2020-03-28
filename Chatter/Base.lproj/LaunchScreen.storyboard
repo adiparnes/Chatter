@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +14,37 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat-icon" translatesAutoresizingMaskIntoConstraints="NO" id="avi-7F-3X9">
+                                <rect key="frame" x="77" y="280" width="260" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Mj6-eC-m5m"/>
+                                    <constraint firstAttribute="width" constant="260" id="teQ-Bp-eL3"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chatter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywD-kV-x7n">
+                                <rect key="frame" x="77" y="488" width="260" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="RbG-b1-AqY"/>
+                                    <constraint firstAttribute="width" constant="260" id="fQB-VR-oZD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="avi-7F-3X9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="77" id="1CJ-RN-TY1"/>
+                            <constraint firstItem="ywD-kV-x7n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="77" id="3yc-Bc-Zhp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ywD-kV-x7n" secondAttribute="bottom" constant="315" id="K3g-bY-y4v"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ywD-kV-x7n" secondAttribute="trailing" constant="77" id="OnF-qB-1uG"/>
+                            <constraint firstItem="avi-7F-3X9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="236" id="WLJ-LS-dQ8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="avi-7F-3X9" secondAttribute="trailing" constant="77" id="Wvk-A9-wG3"/>
+                            <constraint firstItem="avi-7F-3X9" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="eGw-fo-inX"/>
+                            <constraint firstItem="ywD-kV-x7n" firstAttribute="top" secondItem="avi-7F-3X9" secondAttribute="bottom" constant="8" id="eRZ-V3-poP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="avi-7F-3X9" secondAttribute="bottom" constant="382" id="icg-RO-ntu"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -24,4 +53,7 @@
             <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="chat-icon" width="1024" height="1024"/>
+    </resources>
 </document>

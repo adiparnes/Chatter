@@ -60,7 +60,9 @@ class RecentChatTableViewCell: UITableViewCell {
         
         self.nameLable.text = recentChat[kWITHUSERFULLNAME] as? String
         
-        self.lastMeassegeLable.text = recentChat[kLASTMESSAGE] as? String
+        let decryptedText = Encryption.decryptText(chatRoomId: recentChat[kCHATROOMID] as! String, encryptedMessage: recentChat[kLASTMESSAGE] as! String)
+        
+        self.lastMeassegeLable.text = decryptedText
         
         self.messageCounter.text = recentChat[kCOUNTER] as? String
         

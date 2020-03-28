@@ -10,4 +10,10 @@ import UIKit
 
 class PicturesCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var imageView: UIImageView!
+    
+    func generateCell(image: UIImage) {
+        self.isUserInteractionEnabled = true
+        self.imageView.image = image
+    }
 }

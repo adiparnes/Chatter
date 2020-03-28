@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import ProgressHUD
 
+@available(iOS 13.0, *)
 class ProfileViewTableViewController: UITableViewController {
 
     @IBOutlet weak var FullNameLable: UILabel!
@@ -34,14 +36,27 @@ class ProfileViewTableViewController: UITableViewController {
     //MARK:IBAction
  
     
-    @IBAction func cellButtonPressed(_ sender: Any) {
-        print("call user\(user!.fullname)")
-    }
+       
+       @IBAction func chatButtonPressed(_ sender: Any) {
+           
+           if !checkBlockedStatus(withUser: user!) {
+               
+               let chatVC = ChatViewController()
+               chatVC.titleName = user!.firstname
+               chatVC.membersToPush = [FUser.currentId(), user!.objectId]
+               chatVC.membarIds = [FUser.currentId(), user!.objectId]
+               chatVC.chatRoonmId = startPrivateChat(user1: FUser.currentUser()!, user2: user!)
+               
+               chatVC.isGroup = false
+               chatVC.hidesBottomBarWhenPushed = true
+               self.navigationController?.pushViewController(chatVC, animated: true)
+               
+               
+           } else {
+               ProgressHUD.showError("This user is not available for chat!")
+           }
     
-    @IBAction func chatButtonPressed(_ sender: Any) {
-        print("chat user\(user!.fullname)")
-
-    }
+       }
     
     
     @IBAction func blockUserButtonPressed(_ sender: Any) {
@@ -61,8 +76,11 @@ class ProfileViewTableViewController: UITableViewController {
                 return
             }
             self.updateBlockStatus()
-            
+            ModelEvents.UserDataEvent.post();
         }
+        
+        blockUser(userToBlock: user!)
+        
     }
     
     
@@ -71,7 +89,7 @@ class ProfileViewTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,13 +135,13 @@ class ProfileViewTableViewController: UITableViewController {
     {
         if user!.objectId != FUser.currentId(){
             blockButtonOutlet.isHidden = false
-            messageButtonOutlet.isHidden = false
-            cellButtonOutlet.isHidden = false
+         //   messageButtonOutlet.isHidden = false
+         //   cellButtonOutlet.isHidden = false
             
         }else{
         blockButtonOutlet.isHidden = true
-        messageButtonOutlet.isHidden = true
-        cellButtonOutlet.isHidden = true
+       // messageButtonOutlet.isHidden = true
+      //  cellButtonOutlet.isHidden = true
         }
         if FUser.currentUser()!.blockedUsers.contains(user!.objectId)
         {

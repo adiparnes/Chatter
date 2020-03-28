@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import ProgressHUD
 
+@available(iOS 13.0, *)
 class UsersTableViewController: UITableViewController, UISearchResultsUpdating, UserTableViewCellDelegate {
     
     
@@ -39,7 +40,7 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         
-        loadUser(filter: kCITY)
+        loadUser(filter: "")
         
     }
 
@@ -145,10 +146,23 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
             
         }
         
-        startPrivateChat(user1: FUser.currentUser()!, user2: user)
-        
-        
-    }
+       if !checkBlockedStatus(withUser: user) {
+                
+                let chatVC = ChatViewController()
+                chatVC.titleName = user.firstname
+                chatVC.membersToPush = [FUser.currentId(), user.objectId]
+                chatVC.membarIds = [FUser.currentId(), user.objectId]
+                chatVC.chatRoonmId = startPrivateChat(user1: FUser.currentUser()!, user2: user)
+                chatVC.isGroup = false
+                chatVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(chatVC, animated: true)
+                
+                
+            } else {
+                ProgressHUD.showError("This user is not available for chat!")
+            }
+            
+        }
     
     func loadUser(filter:String)
     {
@@ -242,8 +256,10 @@ class UsersTableViewController: UITableViewController, UISearchResultsUpdating, 
             if firstCharString != sectionTitle {
                 sectionTitle = firstCharString
                 self.allUsersGropped[sectionTitle] = []
-                self.sectionTitlelist.append(sectionTitle)
                 
+                if !sectionTitlelist.contains(sectionTitle) {
+                self.sectionTitlelist.append(sectionTitle)
+                }
             }
             self.allUsersGropped[firstCharString]?.append(currentUser)
         }

@@ -16,11 +16,7 @@ pod 'IQAudioRecorderController'
 
 pod 'JSQMessagesViewController','7.3.3'
 pod 'IDMPhotoBrowser'
+pod 'RNCryptor'
 
-pod 'ImagePicker'	
-
-
-
-  # Pods for Chatter
-
+pod 'ImagePicker'
 end

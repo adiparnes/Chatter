@@ -8,7 +8,11 @@
 
 import UIKit
 import ProgressHUD
-class FinsihRegistrationViewController: UIViewController {
+import ImagePicker
+
+class FinsihRegistrationViewController: UIViewController , ImagePickerDelegate{
+   
+    
     @IBOutlet weak var nameTextField: UITextField!
         @IBOutlet weak var surnameTextField: UITextField!
     @IBOutlet weak var CountryTextField: UITextField!
@@ -23,11 +27,22 @@ class FinsihRegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            print(email,password)
+        avatarImageView.isUserInteractionEnabled = true
     }
     
     
   //MARK: IBAction
+    
+    @IBAction func avatarImageTap(_ sender: Any) {
+        
+        let imagePickerController = ImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.imageLimit = 1
+        
+        present(imagePickerController, animated: true, completion: nil)
+        
+        dissmisKeyboard()
+    }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         dissmisKeyboard()
@@ -37,7 +52,6 @@ class FinsihRegistrationViewController: UIViewController {
             FUser.registerUserWith(email: email, password: password, firstName: nameTextField.text!, lastName: surnameTextField.text!) { (error) in
                 
                 if error != nil {
-                    ProgressHUD.dismiss()
                     ProgressHUD.showError(error!.localizedDescription)
                     return
                 }
@@ -56,6 +70,10 @@ class FinsihRegistrationViewController: UIViewController {
         dissmisKeyboard()
         self.dismiss(animated: true, completion: nil)
         
+    }
+    
+    @IBAction func backroundTap(_ sender: Any) {
+        dissmisKeyboard()
     }
     
     //MARK:Helpers
@@ -132,4 +150,23 @@ class FinsihRegistrationViewController: UIViewController {
         phoneTextField.text = ""
     }
 
+            //MARK: ImagePickerDelegate
+      
+      func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+          self.dismiss(animated: true, completion: nil)
+      }
+      
+      func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+          
+          if images.count > 0 {
+              self.avatarImage = images.first!
+              self.avatarImageView.image = self.avatarImage?.circleMasked
+          }
+          
+          self.dismiss(animated: true, completion: nil)
+      }
+      
+      func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+          self.dismiss(animated: true, completion: nil)
+      }
 }

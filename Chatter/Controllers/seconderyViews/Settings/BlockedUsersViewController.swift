@@ -18,13 +18,25 @@ class BlockedUsersViewController: UIViewController, UITableViewDelegate, UITable
     
  var blockedUsersArray : [FUser] = []
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.largeTitleDisplayMode = .never
         tableView.tableFooterView = UIView()
+      
         
-        loadUsers()
+
+               ModelEvents.UserDataEvent.observe {
+                  
+                   self.reloadData();
+               }
+               reloadData();
+        
+        
+        
+//        loadUsers()
     }
     
     
@@ -109,4 +121,14 @@ class BlockedUsersViewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
+    
+    @objc func reloadData(){
+          Model.instance.getAllBlockingUsers { (_data:[FUser]?) in
+              if (_data != nil) {
+                  self.blockedUsersArray = _data!;
+                  self.tableView.reloadData();
+              }
+          };
+      }
+
 }

@@ -38,22 +38,31 @@ class WelcomeViewController: UIViewController {
     
     @IBAction func registerButtonPressed(_ sender: Any) {
         dissmisKeyboard()
-        if emailTextField.text != "" && ((passwordTextField?.text) != nil) && confirmPasswordTextField.text != nil {
+        if isValid() {
             if passwordTextField.text == confirmPasswordTextField.text{
             registerUser()
             }else{
                 ProgressHUD.showError("Password don't match")
                 }
          }else{
-            ProgressHUD.showError("All fields are required!")
+            if !emailTextField.text!.isValidEmail(){
+                ProgressHUD.showError("Email address is badly formatted")
+            }else if passwordTextField!.text!.count < 6 {
+                ProgressHUD.showError("The password must be 6 characters long or more.")
+            }else{
+                ProgressHUD.showError("All fields are required!")
+            }
          }
     }
     
-    @IBAction func backroundTap(_ sender: Any) {
-    dissmisKeyboard()
-        
+    
+    func isValid() -> Bool{
+        return emailTextField.text!.isValidEmail() && passwordTextField!.text!.count >= 6 && confirmPasswordTextField.text == passwordTextField?.text
     }
     
+    @IBAction func backroundTap(_ sender: Any) {
+        dissmisKeyboard()
+    }
     
    //MARK: HelperFunctions
     
@@ -115,4 +124,24 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+}
+
+extension String {
+    
+    func isValidEmail() -> Bool {
+        let emailRegex = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
+        let emailTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailTest.evaluate(with: self)
+    }
+    
+    mutating func index(character:Character) -> Int?{
+        var temp = self
+        for i in 0...self.count - 1{
+            if temp.first == character{
+                return i
+            }
+            temp.remove(at: temp.startIndex)
+        }
+        return nil
+    }
 }
