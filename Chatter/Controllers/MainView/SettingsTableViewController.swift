@@ -28,6 +28,10 @@ class SettingsTableViewController: UITableViewController {
                setupUI()
                loadUserDefaults()
            }
+        
+//        reference(.Message).document().collection("NK6LM1bK0BTpp9t3wds40ibob2G3tcOhN2UiruNt7MzhLeKc1AMIOEq1").document("D1766445-8137-460B-82A1-88AB2D5DE88A").delete()
+        
+        
        }
     
     
@@ -98,27 +102,6 @@ class SettingsTableViewController: UITableViewController {
     }
     
     
-//    @IBAction func deleteAccountButtonPressd(_ sender: Any) {
-//
-//        let optionMenu = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete the account?", preferredStyle: .actionSheet)
-//
-//               let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (alert) in
-//
-//                   self.deleteUser()
-//               }
-//
-//               let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-//
-//               }
-//
-//               optionMenu.addAction(deleteAction)
-//               optionMenu.addAction(cancelAction)
-//
-//
-//        self.present(optionMenu, animated: true, completion: nil)
-//    }
-    
-    
     
     func showLoginView()
     {
@@ -148,36 +131,6 @@ class SettingsTableViewController: UITableViewController {
           
          
       }
-    
-    
-    
-    
-    //MARK: Delete user
-    
-    func deleteUser() {
-        
-        //delet locally
-        userDefaults.removeObject(forKey: kPUSHID)
-        userDefaults.removeObject(forKey: kCURRENTUSER)
-        userDefaults.synchronize()
-        
-        //delete from firebase
-        reference(.User).document(FUser.currentId()).delete()
-        
-        FUser.deleteUser { (error) in
-            
-            if error != nil {
-                
-                DispatchQueue.main.async {
-                    ProgressHUD.showError("Couldnt delete user")
-                }
-                return
-            }
-            
-            self.showLoginView()
-        }
-    }
-    
     
     //MARK: UserDefaults
     

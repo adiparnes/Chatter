@@ -461,7 +461,7 @@ class ChatViewController: JSQMessagesViewController ,UIImagePickerControllerDele
         messages.remove(at: indexPath.row)
         
         //delete message from firebase
-        OutgoingMessages.deleteMessage(withId: messageId, chatRoomId: chatRoonmId)
+        OutgoingMessages.deleteMessage(withId: messageId, chatRoomId: chatRoonmId,membersToPush:membersToPush)
     }
     
     //MARK: Sand Messages

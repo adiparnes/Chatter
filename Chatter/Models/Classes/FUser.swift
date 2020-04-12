@@ -229,7 +229,6 @@ class FUser {
     class func logOutCurrentUser(completion: @escaping (_ success: Bool) -> Void) {
         
         userDefaults.removeObject(forKey: kPUSHID)
-        removeOneSignalId()
         
         userDefaults.removeObject(forKey: kCURRENTUSER)
         userDefaults.synchronize()
@@ -248,18 +247,6 @@ class FUser {
         
     }
     
-    //MARK: Delete user
-    
-    class func deleteUser(completion: @escaping (_ error: Error?) -> Void) {
-        
-        let user = Auth.auth().currentUser
-        
-        user?.delete(completion: { (error) in
-            
-            completion(error)
-        })
-        
-    }
     
 } //end of class funcs
 
@@ -406,40 +393,6 @@ func updateCurrentUserInFirestore(withValues : [String : Any], completion: @esca
 }
 
 
-//MARK: OneSignal
-
-func updateOneSignalId() {
-    
-    if FUser.currentUser() != nil {
-        
-        if let pushId = UserDefaults.standard.string(forKey: kPUSHID) {
-            setOneSignalId(pushId: pushId)
-        } else {
-            removeOneSignalId()
-        }
-    }
-}
-
-
-func setOneSignalId(pushId: String) {
-    updateCurrentUserOneSignalId(newId: pushId)
-}
-
-
-func removeOneSignalId() {
-    updateCurrentUserOneSignalId(newId: "")
-}
-
-//MARK: Updating Current user funcs
-
-func updateCurrentUserOneSignalId(newId: String) {
-    
-    updateCurrentUserInFirestore(withValues: [kPUSHID : newId]) { (error) in
-        if error != nil {
-            print("error updating push id \(error!.localizedDescription)")
-        }
-    }
-}
 
 //MARK: Chaeck User block status
 
